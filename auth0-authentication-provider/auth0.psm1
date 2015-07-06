@@ -8,11 +8,11 @@ $identityTokenIssuerName = "Auth0"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 $logsPath = [io.path]::combine($modulePath, 'auth0-sharepoint.log')
 If (Test-Path $logsPath){
-   Remove-Item $logsPath
+    Remove-Item $logsPath
 }
 $transcriptPath = [io.path]::combine($modulePath, 'auth0-sharepoint-output.log')
 If (Test-Path $transcriptPath){
-   Remove-Item $transcriptPath
+    Remove-Item $transcriptPath
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -20,9 +20,9 @@ If (Test-Path $transcriptPath){
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 function Log([string]$msg)
 {
-  $now = [datetime]::Now.ToString("HH:mm:ss")
-  Write-Host " ", $now, " - ", $msg
-  Add-Content $logsPath "$now - DEBUG: $msg`n"
+    $now = [datetime]::Now.ToString("HH:mm:ss")
+    Write-Host " ", $now, " - ", $msg
+    Add-Content $logsPath "$now - DEBUG: $msg`n"
 } 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -31,10 +31,10 @@ function Log([string]$msg)
 $hasErrors = $false
 function LogError([string]$msg)
 {
-  $now = [datetime]::Now.ToString("HH:mm:ss")
-  Write-Host -Fore Red " ", $now, " - ", $msg
-  Add-Content $logsPath "$now - ERROR: $msg`n"
-  $hasErrors = $true
+    $now = [datetime]::Now.ToString("HH:mm:ss")
+    Write-Host -Fore Red " ", $now, " - ", $msg
+    Add-Content $logsPath "$now - ERROR: $msg`n"
+    $hasErrors = $true
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -42,9 +42,9 @@ function LogError([string]$msg)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 function LogSuccess([string]$msg)
 {
-  $now = [datetime]::Now.ToString("HH:mm:ss")
-  Write-Host -Fore Green " ", $now, " - ", $msg
-  Add-Content $logsPath "$now - INFO: $msg`n"
+    $now = [datetime]::Now.ToString("HH:mm:ss")
+    Write-Host -Fore Green " ", $now, " - ", $msg
+    Add-Content $logsPath "$now - INFO: $msg`n"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -52,20 +52,21 @@ function LogSuccess([string]$msg)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 function GetSharePointVersion()
 {
-	$SPFarm = Get-SPFarm
-	$number = $SPFarm.BuildVersion.Major
-  If ($number -eq 15) 
-  { 
+    $SPFarm = Get-SPFarm
+    $number = $SPFarm.BuildVersion.Major
+
+    If ($number -eq 15) 
+    { 
       Return 2013
-  } 
-  elseif ($number -eq 14) 
-  { 
+    } 
+    elseif ($number -eq 14) 
+    { 
       Return 2010
-  } 
-  else 
-  { 
+    } 
+    else 
+    { 
       Return 0
-  } 
+    } 
 }
 
 
@@ -73,8 +74,8 @@ function GetSharePointVersion()
 # Function: SharePoint 2013.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 function IsSharePoint2013 {
-	$SPFarm = Get-SPFarm
-	return $SPFarm.BuildVersion.Major -eq 15
+    $SPFarm = Get-SPFarm
+    return $SPFarm.BuildVersion.Major -eq 15
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -162,7 +163,7 @@ function GetWebApp([string]$webAppUrl) {
 		$webAppUrl += "/" 
 	}
   
-  Log "Looking for SPWebApplication: $webAppUrl"
+    Log "Looking for SPWebApplication: $webAppUrl"
 	
 	$webApp = Get-SPWebApplication | where { $_.Url -eq $webAppUrl }
 	if ($webApp -Eq $null) {
@@ -175,52 +176,6 @@ function GetWebApp([string]$webAppUrl) {
 	}
 	
 	Return $webApp
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# Function: Get web application property.
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-function Get-WebApplicationProperty()
-{
-	[CmdletBinding()]
-	Param
-  (
-		[Parameter(Mandatory=$true)]
-		[string]$url,
-		
-		[Parameter(Mandatory=$true)]
-		[string]$key
-	)
-	
-	$webapp = Get-SPWebApplication -Identity $url
-	return $webapp.Properties[$key]
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# Function: Set web application property.
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-function Set-WebApplicationProperty()
-{
-	[CmdletBinding()]
-	Param
-  (
-		[Parameter(Mandatory=$true)]
-		[string]$url,
-		
-		[Parameter(Mandatory=$true)]
-		[string]$key,
-		
-		[Parameter(Mandatory=$true)]
-		[string]$value
-	)
-	
-	$webapp = Get-SPWebApplication -Identity $url
-	if (!$webapp.Properties.ContainsKey($key)) { 
-    $webapp.Properties.Add($key, $value);
-	} else {
-    $webapp.Properties[$key] = $value;
-	}                        
-  $webapp.Update();
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -765,10 +720,10 @@ function Enable-ClaimsProvider {
 	$solution = Get-SPSolution $solutionName -ErrorAction SilentlyContinue
 
     # Auth0 not enabled.
-	# if (-Not (Get-SPTrustedIdentityTokenIssuer Auth0 -ErrorAction SilentlyContinue)) {
-    #    LogError "Auth0 is not enabled. Please use the Enable-Auth0 command or read the documentation: https://docs.auth0.com/integrations/sharepoint"
-	#	Return
-	#}
+	if (-Not (Get-SPTrustedIdentityTokenIssuer Auth0 -ErrorAction SilentlyContinue)) {
+        LogError "Auth0 is not enabled. Please use the Enable-Auth0 command or read the documentation: https://docs.auth0.com/integrations/sharepoint"
+        Return
+	}
 
     # Add Claims Provider.
 	if (-Not $solution -Or -Not $solution.Added) {

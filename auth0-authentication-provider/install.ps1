@@ -7,9 +7,9 @@ $modulePath = "$modulesPath\Auth0"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 function Log([string]$msg)
 {
-  $now = [datetime]::Now.ToString("HH:mm:ss")
-  Write-Host " ", $now, " - ", $msg
-  Add-Content $logsPath "$now - DEBUG: $msg`n"
+    $now = [datetime]::Now.ToString("HH:mm:ss")
+    Write-Host " ", $now, " - ", $msg
+    Add-Content $logsPath "$now - DEBUG: $msg`n"
 } 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -18,10 +18,10 @@ function Log([string]$msg)
 $hasErrors = $false
 function LogError([string]$msg)
 {
-  $now = [datetime]::Now.ToString("HH:mm:ss")
-  Write-Host -Fore Red " ", $now, " - ", $msg
-  Add-Content $logsPath "$now - ERROR: $msg`n"
-  $hasErrors = $true
+    $now = [datetime]::Now.ToString("HH:mm:ss")
+    Write-Host -Fore Red " ", $now, " - ", $msg
+    Add-Content $logsPath "$now - ERROR: $msg`n"
+    $hasErrors = $true
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -29,17 +29,17 @@ function LogError([string]$msg)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 function LogSuccess([string]$msg)
 {
-  $now = [datetime]::Now.ToString("HH:mm:ss")
-  Write-Host -Fore Green " ", $now, " - ", $msg
-  Add-Content $logsPath "$now - INFO: $msg`n"
+    $now = [datetime]::Now.ToString("HH:mm:ss")
+    Write-Host -Fore Green " ", $now, " - ", $msg
+    Add-Content $logsPath "$now - INFO: $msg`n"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Function: SharePoint 2013.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 function IsSharePoint2013 {
-	$SPFarm = Get-SPFarm
-	return $SPFarm.BuildVersion.Major -eq 15
+    $SPFarm = Get-SPFarm
+    return $SPFarm.BuildVersion.Major -eq 15
 }
 
 Write-Host ""
@@ -58,7 +58,7 @@ $webclient.DownloadFile("https://raw.githubusercontent.com/auth0/auth0-sharepoin
 
 # Remove Module
 if (Get-Module "Auth0") { 
-	Remove-Module "Auth0" 
+    Remove-Module "Auth0" 
 }
 
 # Install Module
