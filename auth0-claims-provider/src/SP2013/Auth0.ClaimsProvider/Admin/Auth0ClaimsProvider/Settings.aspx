@@ -59,7 +59,7 @@
 					    <Template_control>
 						    <SharePoint:EncodedLiteral ID="EncodedLiteral3" runat="server" text="Domain (for example contoso.auth0.com):" EncodeMethod='HtmlEncode'/>
 						    <br/>
-						    <wssawc:InputFormTextBox title="Domain" class="ms-input" ID="DomainTextBox" TextMode="MultiLine" Rows="3" Runat="server" Width="100% />
+						    <wssawc:InputFormTextBox title="Domain" class="ms-input" ID="DomainTextBox" TextMode="MultiLine" Rows="3" Runat="server" Width="100%" />
 						    <br/>
 					    </Template_control>
 				    </wssuc:InputFormControl>
