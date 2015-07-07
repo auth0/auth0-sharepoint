@@ -95,7 +95,7 @@
     <Compile Include="Admin\Auth0ClaimsProvider\Settings.aspx.designer.cs">
       <DependentUpon>Settings.aspx.cs</DependentUpon>
     </Compile>
-    <Compile Include="Auth0LoggingService.cs" />
+    <Compile Include="Core\Logging\UlsLogger.cs" />
     <Compile Include="Configuration\Auth0Config.cs" />
     <Compile Include="Core\DefaultClaimTypes.cs" />
     <Compile Include="Core\Logging\ClaimsProviderEventSource.cs" />

@@ -8,6 +8,7 @@
     using Microsoft.SharePoint.Administration.Claims;
     using System.Collections.Generic;
     using System;
+    using Auth0.ClaimsProvider.Core.Logging;
 
     public static class Utils
     {
@@ -28,11 +29,11 @@
                 }
                 else
                 {
-                    Auth0LoggingService.WriteError("Claim provider '{0}' is associated to several TrustedLoginProvider, which is not supported because there is no way to determine what TrustedLoginProvider is currently calling the claim provider during search and resolution.", providerInternalName);
+                    UlsLogger.WriteError("Claim provider '{0}' is associated to several TrustedLoginProvider, which is not supported because there is no way to determine what TrustedLoginProvider is currently calling the claim provider during search and resolution.", providerInternalName);
                 }
             }
 
-            Auth0LoggingService.WriteError("Claim provider '{0}' is not associated with any SPTrustedLoginProvider, and it cannot create permissions for a trust if it is not associated to it.\r\nUse PowerShell cmdlet Get-SPTrustedIdentityTokenIssuer to create association", providerInternalName);
+            UlsLogger.WriteError("Claim provider '{0}' is not associated with any SPTrustedLoginProvider, and it cannot create permissions for a trust if it is not associated to it.\r\nUse PowerShell cmdlet Get-SPTrustedIdentityTokenIssuer to create association", providerInternalName);
 
             return null;
         }

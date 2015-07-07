@@ -1,20 +1,21 @@
 ﻿using Microsoft.SharePoint.Administration;
+
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 
-namespace Auth0.ClaimsProvider
+namespace Auth0.ClaimsProvider.Core.Logging
 {
-    public class Auth0LoggingService : SPDiagnosticsServiceBase
+    public class UlsLogger : SPDiagnosticsServiceBase
     {
         public static string AreaName = "Auth0";
 
-        private static Auth0LoggingService _instance;
+        private static UlsLogger _instance;
 
         private static readonly object _syncLock = new object();
 
-        public static Auth0LoggingService Instance
+        public static UlsLogger Instance
         {
             get
             {
@@ -23,14 +24,15 @@ namespace Auth0.ClaimsProvider
                     lock (_syncLock)
                     {
                         if (_instance == null)
-                            _instance = new Auth0LoggingService();
+                            _instance = new UlsLogger();
                     }
                 }
+
                 return _instance;
             }
         }
 
-        private Auth0LoggingService()
+        private UlsLogger()
             : base("Auth0 Logging Service", SPFarm.Local)
         {
 
@@ -52,8 +54,8 @@ namespace Auth0.ClaimsProvider
         {
             try
             {
-                var category = Auth0LoggingService.Instance.Areas[AreaName].Categories["ClaimsProvider"];
-                Auth0LoggingService.Instance.WriteTrace(0, category, TraceSeverity.Verbose,
+                var category = UlsLogger.Instance.Areas[AreaName].Categories["ClaimsProvider"];
+                UlsLogger.Instance.WriteTrace(0, category, TraceSeverity.Verbose,
                     args != null && args.Length > 0 ? String.Format(message, args) : message);
             }
             catch (Exception)
@@ -66,8 +68,8 @@ namespace Auth0.ClaimsProvider
         {
             try
             {
-                var category = Auth0LoggingService.Instance.Areas[AreaName].Categories["ClaimsProviderErrors"];
-                Auth0LoggingService.Instance.WriteTrace(0, category, TraceSeverity.Unexpected,
+                var category = UlsLogger.Instance.Areas[AreaName].Categories["ClaimsProviderErrors"];
+                UlsLogger.Instance.WriteTrace(0, category, TraceSeverity.Unexpected,
                     args != null && args.Length > 0 ? String.Format(message, args) : message);
             }
             catch (Exception)
