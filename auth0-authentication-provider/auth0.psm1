@@ -365,10 +365,6 @@ function Enable-Auth0 {
 		foreach ($claimMapping in $mappings) {
 			$isRepeated = $false
 			foreach ($claimTypeInformation in $spti.ClaimTypeInformation) {   
-				Log "SPTrustedIdentityTokenIssuer ClaimTypeInformation:"
-                Log " > DisplayName:'$($claimTypeInformation.DisplayName)'"
-                Log " > ClaimType:'$($claimTypeInformation.InputClaimType)'"
-
 				if ($claimMapping.DisplayName -eq $claimTypeInformation.DisplayName) {
 					if ($claimMapping.InputClaimType -ne $claimTypeInformation.InputClaimType) {      
 						Log " ! ClaimType '$($claimTypeInformation.DisplayName)' already in use."
@@ -386,7 +382,7 @@ function Enable-Auth0 {
 			}
 		}
 
-        Log "Adding claims:"
+        Log "Adding claims..."
 		foreach ($claimMapping in $previouslyInexistentMappings) {
 			Log " > Adding ClaimType $claimMapping.InputClaimType"
 			$spti.ClaimTypes.Add($claimMapping.InputClaimType)
@@ -416,7 +412,7 @@ function Enable-Auth0 {
 			} 
 		}
 		else {
-			Log "ProviderRealms check for key -> '$($webApp.Url)' and not value -> '$realm'." 
+			Log "ProviderRealms check for '$($webApp.Url)' and not: '$realm'." 
 			$realmChanged = $spti.ProviderRealms.ContainsKey($webApp.Url) -and -not $spti.ProviderRealms.ContainsValue($realm);
 			if ($realmChanged) {
 				Log " > Realm changed: '$($realmChanged)'"
@@ -434,7 +430,7 @@ function Enable-Auth0 {
 	}
 
 	foreach ($providerRealm in $spti.ProviderRealms.GetEnumerator()) {
-		Write-Verbose "Configured provider realm -> Uri: '$($providerRealm.Key)' - Realm: '$($providerRealm.Value)'"
+		Write-Verbose "Configured provider realm. Uri: '$($providerRealm.Key)' - Realm: '$($providerRealm.Value)'"
 	}
 
 	# Update Web Application to use claims authentication.
@@ -493,14 +489,14 @@ function Enable-Auth0 {
 		
 		foreach ($trustedRootAuth in $existingTrustedRootAuth) {
 			if ($trustedRootAuth.Name -Eq $certName) {
-				Log " > Certificate $certName exists in SP trusted roo.t"  
+				Log " > Certificate $certName exists in SP trusted root."  
 				$trustedRootAuthExists = $true
 				break
 			}
 		}
 		
 		if ($trustedRootAuthExists -Ne $true) {
-			Log "Certificate $certName does not exist in SP trusted root. Adding certificate $certName to SP trusted root"
+			Log "Certificate $certName does not exist in SP trusted root. Adding certificate $certName to SP trusted root."
 			New-SPTrustedRootAuthority -name $certName -Certificate $tempCert
 		}
 	}
