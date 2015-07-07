@@ -594,6 +594,9 @@ function Disable-Auth0 {
             If ($_.ClaimProviderName -eq "Auth0FederatedUsers") {
                 $requireUpdate = $true
             }
+            If ($_.LoginProviderName -eq "Auth0") {
+                $requireUpdate = $true
+            }
 	    }
 
         # Update.
