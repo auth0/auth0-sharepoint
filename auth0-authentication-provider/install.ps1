@@ -9,19 +9,15 @@ function Log([string]$msg)
 {
     $now = [datetime]::Now.ToString("HH:mm:ss")
     Write-Host " ", $now, " - ", $msg
-    Add-Content $logsPath "$now - DEBUG: $msg`n"
 } 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Function: Log error message.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-$hasErrors = $false
 function LogError([string]$msg)
 {
     $now = [datetime]::Now.ToString("HH:mm:ss")
     Write-Host -Fore Red " ", $now, " - ", $msg
-    Add-Content $logsPath "$now - ERROR: $msg`n"
-    $hasErrors = $true
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -31,7 +27,6 @@ function LogSuccess([string]$msg)
 {
     $now = [datetime]::Now.ToString("HH:mm:ss")
     Write-Host -Fore Green " ", $now, " - ", $msg
-    Add-Content $logsPath "$now - INFO: $msg`n"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
