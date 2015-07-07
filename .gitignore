@@ -194,3 +194,9 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+
+bin
+!bin/Release/
+bin/Release/*
+!Auth0.ClaimsProvider.wsp

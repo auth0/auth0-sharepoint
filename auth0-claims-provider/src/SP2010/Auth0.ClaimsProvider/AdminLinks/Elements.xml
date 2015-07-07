@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <CustomAction
+      Id="Auth0ClaimsProviderAdminLink"
+      GroupId="GeneralSecurity"
+      Location="Microsoft.SharePoint.Administration.Security"
+      Sequence="500"
+      Title="Configure Auth0 Claims Provider">
+    <UrlAction Url="/_admin/Auth0ClaimsProvider/Settings.aspx" />
+  </CustomAction>
+</Elements>

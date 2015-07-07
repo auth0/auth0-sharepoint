@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FCE5325D-552F-4A07-955A-BA982E937E13}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Auth0.ClaimsProvider</RootNamespace>
+    <AssemblyName>Auth0.ClaimsProvider</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SandboxedSolution>False</SandboxedSolution>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <FodyPath>..\packages\Fody.1.13.6.1</FodyPath>
+    <ProjectMode>SharePointCustomization</ProjectMode>
+    <TargetOfficeVersion>15.0</TargetOfficeVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Auth0Merged">
+      <HintPath>..\packages\Auth0.1.11.2\lib\net\Auth0Merged.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SharePoint.ApplicationPages.Administration">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Common Files\microsoft shared\Web Server Extensions\15\CONFIG\ADMINBIN\Microsoft.SharePoint.ApplicationPages.Administration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.WorkflowActions, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.SharePoint" />
+    <Reference Include="Microsoft.SharePoint.Security" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\Auth0ClaimsProvider\Settings.aspx.cs">
+      <DependentUpon>Settings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Auth0ClaimsProvider\Settings.aspx.designer.cs">
+      <DependentUpon>Settings.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Auth0LoggingService.cs" />
+    <Compile Include="Configuration\Auth0Config.cs" />
+    <Compile Include="Core\DefaultClaimTypes.cs" />
+    <Compile Include="Core\Logging\ClaimsProviderEventSource.cs" />
+    <Compile Include="Core\Logging\ILogger.cs" />
+    <Compile Include="Model\ClaimAttribute.cs" />
+    <Compile Include="Configuration\ConfigurationRepository.cs" />
+    <Compile Include="Configuration\IConfigurationRepository.cs" />
+    <Compile Include="Model\ConsolidatedResult.cs" />
+    <Compile Include="CustomClaimsProvider.cs" />
+    <Compile Include="Features\Auth0\Auth0.EventReceiver.cs">
+      <DependentUpon>Auth0.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Utils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Admin\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{dc633bc5-f8a4-44fa-bd3a-6a7bc45cc993}</SharePointProjectItemId>
+    </None>
+    <None Include="AdminLinks\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{15cb6675-382f-4ba9-ba10-41a29104e4c3}</SharePointProjectItemId>
+    </None>
+    <None Include="Features\Auth0\Auth0.feature">
+      <FeatureId>{8adcc9c5-ea3f-4562-b8f6-5eb576ec2f72}</FeatureId>
+    </None>
+    <None Include="Features\Auth0.ClaimsProvider.Admin\Auth0.ClaimsProvider.Admin.feature">
+      <FeatureId>{61b89942-7eb1-4c96-bd54-f6af4fce308f}</FeatureId>
+    </None>
+    <None Include="key.snk" />
+    <None Include="packages.config" />
+    <None Include="Package\Package.package">
+      <PackageId>{ad1c1a7c-a9d2-4538-b969-cd702c737bf3}</PackageId>
+    </None>
+    <None Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Auth0ClaimsProvider\Settings.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Features\Auth0\Auth0.Template.xml">
+      <DependentUpon>Auth0.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\Auth0.ClaimsProvider.Admin\Auth0.ClaimsProvider.Admin.Template.xml">
+      <DependentUpon>Auth0.ClaimsProvider.Admin.feature</DependentUpon>
+    </Content>
+    <Content Include="AdminLinks\Elements.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="false" />
+  <PropertyGroup>
+    <PreBuildEvent>IF EXIST "$(SolutionDir)\packages\Auth0.1.11.2\lib\net\Auth0Merged.dll" (
+exit
+)
+
+"%25ProgramFiles(x86)%25\Microsoft\ILMerge\ilmerge" /targetplatform:"v4,C:\Windows\Microsoft.NET\Framework64\v4.0.30319" /out:"$(SolutionDir)\packages\Auth0.1.11.2\lib\net\Auth0Merged.dll" "$(SolutionDir)\packages\Auth0.1.11.2\lib\net\Auth0.dll" "$(SolutionDir)\packages\RestSharp.105.1.0\lib\net4\RestSharp.dll" "$(SolutionDir)\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll" /allowDup /wildcards /lib:"$(SolutionDir)\packages\Newtonsoft.Json.7.0.1\lib\net40"
+
+"%25ProgramFiles(x86)%25\Microsoft SDKs\Windows\v8.0A\Bin\NETFX 4.0 Tools\x64\ildasm.exe" /all /out="$(SolutionDir)\packages\Auth0.1.11.2\lib\net\Auth0Merged.il" "$(SolutionDir)\packages\Auth0.1.11.2\lib\net\Auth0Merged.dll"
+
+"%25WinDir%25\Microsoft.NET\Framework\v4.0.30319\ilasm.exe" /dll /key="$(ProjectDir)\key.snk" "$(SolutionDir)\packages\Auth0.1.11.2\lib\net\Auth0Merged.il" /out="$(SolutionDir)\packages\Auth0.1.11.2\lib\net\Auth0Merged.dll"</PreBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+</Project>

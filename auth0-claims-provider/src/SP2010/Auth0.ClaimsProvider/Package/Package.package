@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="ad1c1a7c-a9d2-4538-b969-cd702c737bf3" solutionId="ad1c1a7c-a9d2-4538-b969-cd702c737bf3" resetWebServer="false" name="Auth0.ClaimsProvider" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <assemblies>
+    <customAssembly location="Auth0Merged.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="..\packages\Auth0.1.0.21\lib\Auth0Merged.dll" />
+  </assemblies>
+  <features>
+    <featureReference itemId="8adcc9c5-ea3f-4562-b8f6-5eb576ec2f72" />
+    <featureReference itemId="61b89942-7eb1-4c96-bd54-f6af4fce308f" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="dc633bc5-f8a4-44fa-bd3a-6a7bc45cc993" />
+  </projectItems>
+</package>
