@@ -50,14 +50,23 @@ Write-Host ""
 Log "Creating module directory..."
 New-Item -Type Container -Force -path $modulePath | Out-Null
 
-# Download 
-Log "Downloading module and Claims Provider..."
+# Download module
+Log "Downloading module..."
 $webclient = new-object net.webclient
 $webclient.DownloadString("https://raw.githubusercontent.com/auth0/auth0-sharepoint/master/auth0-authentication-provider/auth0.psm1") | Out-File "$modulePath\Auth0.psm1"
-$webclient.DownloadFile("https://raw.githubusercontent.com/auth0/auth0-sharepoint/master/auth0-authentication-provider/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
+    
+# Download claims provider.  
+$isSP2013 = IsSharePoint2013
+If ($isSP2013) {
+    Log "Downloading Claims Provider solution for SP2013..."
+    $webclient.DownloadFile("https://github.com/auth0/auth0-sharepoint/releases/download/sp2013-1.1.0/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
+} Else {
+    Log "Downloading Claims Provider solution for SP2010..."
+    $webClient.DownloadFile("https://github.com/auth0/auth0-sharepoint/releases/download/sp2010-1.0.1.301/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
+}
 
 # Remove Module
-if (Get-Module "Auth0") { 
+If (Get-Module "Auth0") { 
     Remove-Module "Auth0" 
 }
 
