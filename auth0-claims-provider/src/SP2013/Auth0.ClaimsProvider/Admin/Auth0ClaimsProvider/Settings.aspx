@@ -48,7 +48,7 @@
     <table border="0" cellspacing="0" cellpadding="0" width="100%">
         <wssuc:InputFormSection Title="Auth0 settings" runat="server">
             <template_description>
-			    <SharePoint:EncodedLiteral ID="EncodedLiteral1" runat="server" text="Specify one Client ID/Secret for each application one by line (these values can be found in Auth0 Settings)." 
+			    <SharePoint:EncodedLiteral ID="EncodedLiteral1" runat="server" text="Specify one Domain/Client ID/Client Secret for each application one by line (these values can be found in Auth0 Settings)." 
                                            EncodeMethod='HtmlEncodeAllowSimpleTextFormatting'/>
 		    </template_description>
             
@@ -59,7 +59,7 @@
 					    <Template_control>
 						    <SharePoint:EncodedLiteral ID="EncodedLiteral3" runat="server" text="Domain (for example contoso.auth0.com):" EncodeMethod='HtmlEncode'/>
 						    <br/>
-						    <wssawc:InputFormTextBox title="Domain" class="ms-input" ID="DomainTextBox" Runat="server" Columns="30" MaxLength="255" />
+						    <wssawc:InputFormTextBox title="Domain" class="ms-input" ID="DomainTextBox" TextMode="MultiLine" Rows="3" Runat="server" Width="100% />
 						    <br/>
 					    </Template_control>
 				    </wssuc:InputFormControl>
