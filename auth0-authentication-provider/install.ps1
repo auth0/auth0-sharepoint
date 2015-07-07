@@ -48,16 +48,16 @@ New-Item -Type Container -Force -path $modulePath | Out-Null
 # Download module
 Log "Downloading module..."
 $webclient = new-object net.webclient
-$webclient.DownloadString("https://raw.githubusercontent.com/auth0/auth0-sharepoint/master/auth0-authentication-provider/auth0.psm1") | Out-File "$modulePath\Auth0.psm1"
+$webclient.DownloadString("https://cdn.auth0.com/sharepoint/auth0.psm1") | Out-File "$modulePath\Auth0.psm1"
     
 # Download claims provider.  
 $isSP2013 = IsSharePoint2013
 If ($isSP2013) {
     Log "Downloading Claims Provider solution for SP2013..."
-    $webclient.DownloadFile("https://github.com/auth0/auth0-sharepoint/releases/download/sp2013-1.1.0/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
+    $webclient.DownloadFile("https://cdn.auth0.com/sharepoint/sp2013/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
 } Else {
     Log "Downloading Claims Provider solution for SP2010..."
-    $webClient.DownloadFile("https://github.com/auth0/auth0-sharepoint/releases/download/sp2010-1.0.1.301/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
+    $webClient.DownloadFile("https://cdn.auth0.com/sharepoint/sp2010/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
 }
 
 # Remove Module

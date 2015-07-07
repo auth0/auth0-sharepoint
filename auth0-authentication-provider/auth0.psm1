@@ -2,6 +2,7 @@
 $modulesPath = ($env:PSModulePath -Split ";")[0]
 $modulePath = "$modulesPath\Auth0"
 $identityTokenIssuerName = "Auth0"
+$loginPageResourceUrl = "https://cdn.auth0.com/sharepoint/login.aspx"
   
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Output logs.
@@ -237,7 +238,6 @@ function Enable-Auth0 {
     Write-Host ""
 	
     # Login page.    
-	$loginPageResourceUrl = "https://raw.githubusercontent.com/auth0/auth0-sharepoint/master/auth0-authentication-provider/login.aspx"
 	$redirectionUrl = "~/_login/$clientId.aspx"  
 	$version = &{if (IsSharePoint2013) {"15"} else {"14"} }
 	$loginPageFolder =  "$env:ProgramFiles\Common Files\Microsoft Shared\Web Server Extensions\$version\TEMPLATE\IDENTITYMODEL\LOGIN"
