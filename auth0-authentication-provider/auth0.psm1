@@ -276,9 +276,6 @@ function Enable-Auth0 {
 		Return
 	}
 
-    # Store the ClientId.
-    Set-WebApplicationProperty $webAppUrl "Auth0.ClientId" $clientId
-
      ## Start recording output.
 	Start-Transcript -Path $transcriptPath | Out-Null
 
@@ -582,9 +579,6 @@ function Disable-Auth0 {
 	if (-Not $webApp) {
 		Return
 	}
-
-    # Store the ClientId.
-    Set-WebApplicationProperty $webAppUrl "Auth0.ClientId" ""
 
     # Remove authentication provider from all zones.
     Log "Processing zones..."
