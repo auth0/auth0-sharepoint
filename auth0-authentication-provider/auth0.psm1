@@ -507,7 +507,7 @@ function Enable-Auth0 {
     }
 
     # Create login page.
-    If (-Not (Test-Path($loginPageFolder))) {
+    If (-Not (Test-Path("$loginPageFolder\$clientId.aspx"))) {
     	Log "Creating login page."
 
 	    (new-object net.webclient).DownloadString($loginPageResourceUrl) | foreach { $_ -replace "YOUR_AUTH0_DOMAIN", "$auth0Domain" } | foreach { $_ -replace "YOUR_CLIENT_ID", "$clientId" } | foreach { if (!$allowWindowsAuth) { $_ -replace 'var allowWindowsAuth = true;', 'var allowWindowsAuth = false;' } else { $_ } } | Set-Content .\"$clientId.aspx"
