@@ -245,5 +245,11 @@ namespace Auth0.ClaimsProvider.Core.Logging
         {
             WriteEvent(21, context, result);
         }
+
+        [Event(22, Message = "SetLoginProviderForCurrentContext for {0} failed: '{1}'", Level = EventLevel.Warning)]
+        public void SetLoginProviderForCurrentContextFailed(string uri, string reason)
+        {
+            WriteEvent(22, uri, reason);
+        }
     }
 }

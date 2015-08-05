@@ -549,6 +549,7 @@
             var webApplication = SPWebApplication.Lookup(context);
             if (webApplication == null)
             {
+                ClaimsProviderEventSource.Log.SetLoginProviderForCurrentContextFailed(context.ToString(), "WebApplication is null.");
                 return false;
             }
 
@@ -557,19 +558,27 @@
             {
                 site = new SPSite(context.AbsoluteUri);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ClaimsProviderEventSource.Log.SetLoginProviderForCurrentContextFailed(context.ToString(), "Error loading site: " + ex.Message);
+         
                 this.associatedLoginProvider = Utils.GetSPTrustedLoginProviderForClaimsProvider(ProviderInternalName);
                 if (this.associatedLoginProvider != null && this.associatedLoginProvider.IdentityClaimTypeInformation != null)
                 {
                     this.identifierClaimType = this.associatedLoginProvider.IdentityClaimTypeInformation.InputClaimType;
                 }
 
+                if (this.associatedLoginProvider == null) 
+                {
+                    ClaimsProviderEventSource.Log.SetLoginProviderForCurrentContextFailed(context.ToString(), "Associated login provider is null");
+                }
+                
                 return this.associatedLoginProvider != null;
             }
 
             if (site == null)
             {
+                ClaimsProviderEventSource.Log.SetLoginProviderForCurrentContextFailed(context.ToString(), "Site is null.");
                 return false;
             }
 
@@ -578,6 +587,7 @@
                 var iisSettings = webApplication.GetIisSettingsWithFallback(site.Zone);
                 if (!iisSettings.UseTrustedClaimsAuthenticationProvider)
                 {
+                    ClaimsProviderEventSource.Log.SetLoginProviderForCurrentContextFailed(context.ToString(), site.Zone + " is not enabled with UseTrustedClaimsAuthenticationProvider");
                     return false;
                 }
 
@@ -599,6 +609,11 @@
                     }
                 }
 
+                if (this.associatedLoginProvider == null)
+                {
+                    ClaimsProviderEventSource.Log.SetLoginProviderForCurrentContextFailed(context.ToString(), "Associated login provider not found for zone.");
+                }
+            
                 return false;
             }
         }
