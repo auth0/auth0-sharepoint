@@ -16,6 +16,8 @@
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.LabelVersion.Text = typeof(ConfigurationRepository).Assembly.GetName().Version.ToString();
+
             // Get trust currently associated with Auth0, if any
             this.currentTrustedLoginProvider = Utils.GetSPTrustedLoginProviderForClaimsProvider(CustomClaimsProvider.ProviderInternalName);
             if (this.currentTrustedLoginProvider == null)
@@ -29,7 +31,14 @@
 
             if (!this.IsPostBack)
             {
-                this.PopulateFields();
+                try
+                {
+                    this.PopulateFields();
+                }
+                catch (Exception ex)
+                {
+                    this.LabelErrorMessage.Text = ex.Message;
+                }
             }
         }
 

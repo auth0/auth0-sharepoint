@@ -115,5 +115,5 @@
 </asp:Content>
 
 <asp:Content ID="PageTitleInTitleArea" ContentPlaceHolderID="PlaceHolderPageTitleInTitleArea" runat="server">
-    Auth0 Configuration
+    Auth0 Configuration - <asp:Label ID="LabelVersion" runat="server" EnableViewState="False" />
 </asp:Content>
