@@ -46,7 +46,7 @@ Log "Creating module directory..."
 New-Item -Type Container -Force -path $modulePath | Out-Null
 
 If (Test-Path("auth0.psm1")) {
-    Write-Host "Copying module to $modulePath."
+    Log "Copying module to $modulePath."
     Copy-Item auth0.psm1 "$modulePath\Auth0.psm1"
 }
 Else {
@@ -57,7 +57,7 @@ Else {
 }
 
 If (Test-Path("Auth0.ClaimsProvider.wsp")) {
-    Write-Host "Copying Claims Provider to $modulePath."
+    Log "Copying Claims Provider to $modulePath."
     Copy-Item Auth0.ClaimsProvider.wsp "$modulePath\Auth0.ClaimsProvider.wsp"
 }
 Else {
