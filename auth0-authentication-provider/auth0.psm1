@@ -541,14 +541,24 @@ function Enable-Auth0 {
     # Create login page.
     If (-Not (Test-Path("$loginPageFolder\$clientId.aspx"))) {
     	Log "Creating login page."
+    	
+    	$loginPageContents = ""
+    	If (Test-Path("login.aspx")) {
+    	   Log "Using local file."
+    	   $loginPageContents = Get-Content login.aspx	
+    	}
+    	Else {
+    	  Log "Downloading from: $loginPageResourceUrl"
+          $loginPageContents = (new-object net.webclient).DownloadString($loginPageResourceUrl)
+    	}
 
-	    (new-object net.webclient).DownloadString($loginPageResourceUrl) | foreach { $_ -replace "YOUR_AUTH0_DOMAIN", "$auth0Domain" } | foreach { $_ -replace "YOUR_CLIENT_ID", "$clientId" } | foreach { if (!$allowWindowsAuth) { $_ -replace 'var allowWindowsAuth = true;', 'var allowWindowsAuth = false;' } else { $_ } } | Set-Content .\"$clientId.aspx"
-
-	    # Copy the file.
-	    Copy-Item "$clientId.aspx" "$loginPageFolder\$clientId.aspx"
-	} Else {
-		Log "Login page already exists."
-	}
+        $loginPageContents  | foreach { $_ -replace "YOUR_AUTH0_DOMAIN", "$auth0Domain" } | foreach { $_ -replace "YOUR_CLIENT_ID", "$clientId" } | foreach { if (!$allowWindowsAuth) { $_ -replace 'var allowWindowsAuth = true;', 'var allowWindowsAuth = false;' } else { $_ } } | Set-Content .\"$clientId.aspx"
+  
+        # Copy the file.
+        Copy-Item "$clientId.aspx" "$loginPageFolder\$clientId.aspx"
+    } Else {
+        Log "Login page already exists."
+    }
 	
 	# Set ClaimsAuthenticationRedirectionUrl
     Log "Setting login url: $redirectionUrl"
