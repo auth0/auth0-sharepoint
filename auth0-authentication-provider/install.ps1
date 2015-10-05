@@ -45,19 +45,31 @@ Write-Host ""
 Log "Creating module directory..."
 New-Item -Type Container -Force -path $modulePath | Out-Null
 
-# Download module
-Log "Downloading module..."
-$webclient = new-object net.webclient
-$webclient.DownloadString("https://cdn.auth0.com/sharepoint/auth0.psm1") | Out-File "$modulePath\Auth0.psm1"
-    
-# Download claims provider.  
-$isSP2013 = IsSharePoint2013
-If ($isSP2013) {
-    Log "Downloading Claims Provider solution for SP2013..."
-    $webclient.DownloadFile("https://cdn.auth0.com/sharepoint/sp2013/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
-} Else {
-    Log "Downloading Claims Provider solution for SP2010..."
-    $webClient.DownloadFile("https://cdn.auth0.com/sharepoint/sp2010/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
+If (Test-Path("auth0.psm1")) {
+    Write-Host "Copying module to $modulePath."
+    Copy-Item auth0.psm1 "$modulePath\Auth0.psm1"
+}
+Else {
+    # Download module
+    Log "Downloading module..."
+    $webclient = new-object net.webclient
+    $webclient.DownloadString("https://cdn.auth0.com/sharepoint/auth0.psm1") | Out-File "$modulePath\Auth0.psm1"
+}
+
+If (Test-Path("Auth0.ClaimsProvider.wsp")) {
+    Write-Host "Copying Claims Provider to $modulePath."
+    Copy-Item Auth0.ClaimsProvider.wsp "$modulePath\Auth0.ClaimsProvider.wsp"
+}
+Else {
+    # Download claims provider.  
+    $isSP2013 = IsSharePoint2013
+    If ($isSP2013) {
+        Log "Downloading Claims Provider solution for SP2013..."
+        $webclient.DownloadFile("https://cdn.auth0.com/sharepoint/sp2013/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
+    } Else {
+        Log "Downloading Claims Provider solution for SP2010..."
+        $webClient.DownloadFile("https://cdn.auth0.com/sharepoint/sp2010/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
+    }
 }
 
 # Remove Module
