@@ -326,7 +326,16 @@ function Enable-Auth0 {
 	}
 
 	# Get the signing certificate.
-	$fedMetadata = GetFederationMetadata($fedMetadataUrl)
+    	$fedMetadata = ""
+    	If (Test-Path("FederationMetadata.xml")) {
+    	   Log "Using local FederationMetadata file."
+    	   $fedMetadata = Get-Content FederationMetadata.xml	
+    	}
+    	Else {
+    	  Log "Downloading from: $fedMetadataUrl"
+          $fedMetadata = GetFederationMetadata($fedMetadataUrl)
+    	}
+	
 	GetCertificate($fedMetadata) | Set-Content $certName
 	$certPath = Resolve-Path $certName
 	$signingCert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($certPath)
