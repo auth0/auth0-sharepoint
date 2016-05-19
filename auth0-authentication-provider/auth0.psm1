@@ -226,12 +226,12 @@ function ValidateEnvironment() {
 
 	$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 	if ($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator) -eq $false) {
-		LogError "This PowerShell script requires Administrator privilieges. Try opening a PowerShell console by doing right click -> 'Run as Administrator'"
+		LogError "This PowerShell script requires Administrator privileges. Try opening a PowerShell console by doing right click -> 'Run as Administrator'"
 		Return $false
 	}
 
 	if ((Get-SPShellAdmin -ErrorAction SilentlyContinue) -eq $null) {
-		LogError"This PowerShell script requires priviliege to execute SharePoint CmdLets. Try adding the user '$($currentPrincipal.Identity.Name)' as SPShellAdmin. To do this run the following command Add-SPShellAdmin $($currentPrincipal.Identity.Name)"
+		LogError "This PowerShell script requires privileges to execute SharePoint CmdLets. Try adding the user '$($currentPrincipal.Identity.Name)' as SPShellAdmin. To do this run the following command Add-SPShellAdmin $($currentPrincipal.Identity.Name)"
         Return $false
 	}
 	
