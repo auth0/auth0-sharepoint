@@ -31,3 +31,7 @@ You will need to replace the contents of that file with the content in the [logi
     string domain = "YOUR_AUTH0_DOMAIN";
     string clientId = "YOUR_CLIENT_ID";
 ```
+
+If you need to provide a way for users to log-in directly to Sharepoint using Windows Authentication, you will need to customize the login page to include a link to the Sharepoint Login page, usually http://<Sharepoint Site>/_windows/default.aspx?ReturnUrl=/_layouts/15/Authenticate.aspx.
+
+

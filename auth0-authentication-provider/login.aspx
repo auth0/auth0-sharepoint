@@ -6,12 +6,6 @@ protected override void OnLoad(EventArgs e)
     string clientId = "YOUR_CLIENT_ID";
     string redirectUri = HttpUtility.UrlEncode(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/_trust/");
 
-    Response.Redirect("https://" + domain + "/authorize?" + 
-                                "scope=openid&" + 
-                                "response_type=code&" + 
-                                "protocol=wsfed&" + 
-                                "client_id=" + clientId + 
-                                "&redirect_uri=" + redirectUri, true);
+    Response.Redirect("https://" + domain + "/wsfed/" + clientId + "?wreply=" + redirectUri, true);
 }
 </script>
-
