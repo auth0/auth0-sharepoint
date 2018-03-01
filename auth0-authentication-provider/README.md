@@ -14,3 +14,20 @@ Depending on your environment your SharePoint Server might not have internet acc
  - [install.ps1](https://cdn.auth0.com/sharepoint/install.ps1)
  - [login.aspx](https://cdn.auth0.com/sharepoint/login.aspx) (In some browsers you might need to right click and choose "Save As...")
  - FederationMetadata file: `https://{YOUR_AUTH0_DOMAIN}/wsfed/FederationMetadata/2007-06/FederationMetadata.xml`
+
+## Customizing the Login Page
+
+The Authentication Provider uses Universal Login to authenticate users. You can learn how to customize it by reading [this document](https://auth0.com/docs/hosted-pages/login).
+
+## Updating from Previous Versions
+
+Previous versions of the Authentication Provider used [Lock v9](https://auth0.com/lock) embedded in the Sharepoint Login page. Lock v9 is not longer supported.
+
+To upgrade to the Universal Login page, you will need to manually update the existing login pages in your Sharepoint installation. Those can be found in the <Program Files>\Common Files\microsoft shared\Web Server Extensions\<Sharepoint Version>\TEMPLATE\IDENTITYMODEL\LOGIN, and are identified by the Sharepoint Client ID + ".aspx".
+
+You will need to replace the contents of that file with the content in the [login.aspx](login.aspx) file, replacing the YOUR_AUTH0_DOMAIN and YOUR_CLIENT_ID strings with the values that can be found in the "Tutorial" tab of the [Sharepoint SSO Integration in the Auth0 Dashboard](https://manage.auth0.com/#/externalapps/)
+
+```
+    string domain = "YOUR_AUTH0_DOMAIN";
+    string clientId = "YOUR_CLIENT_ID";
+```
