@@ -16,7 +16,7 @@ Previous versions of the Authentication Provider used [Lock v9](https://auth0.co
 
 To upgrade to the Universal Login page, you will need to manually update the existing login pages in your Sharepoint installation. Those can be found in the <Program Files>\Common Files\microsoft shared\Web Server Extensions\<Sharepoint Version>\TEMPLATE\IDENTITYMODEL\LOGIN, and are identified by the Sharepoint Client ID + ".aspx".
 
-You will need to replace the contents of that file with the content in the [login.aspx](auth0-authentication-provider\login.aspx) file, replacing the YOUR_AUTH0_DOMAIN and YOUR_CLIENT_ID strings with the values that can be found in the "Tutorial" tab of the [Sharepoint SSO Integration in the Auth0 Dashboard](https://manage.auth0.com/#/externalapps/)
+You will need to replace the contents of that file with the content in the [login.aspx](auth0-authentication-provider/login.aspx) file, replacing the YOUR_AUTH0_DOMAIN and YOUR_CLIENT_ID strings with the values that can be found in the "Tutorial" tab of the [Sharepoint SSO Integration in the Auth0 Dashboard](https://manage.auth0.com/#/externalapps/)
 
 ```
     string domain = "YOUR_AUTH0_DOMAIN";
