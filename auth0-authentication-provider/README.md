@@ -34,8 +34,9 @@ You will need to replace the contents of that file with the content in the [logi
 
 If you need to provide a way for users to log-in directly to Sharepoint using Windows Authentication, you will need to customize the login page to include a link to the Sharepoint Login page, usually http://<Sharepoint Site>/_windows/default.aspx?ReturnUrl=/_layouts/15/Authenticate.aspx. You can do it with the following code:
  
- ```js
+ ```
 lock.on('signin ready', function() {
-  $('.auth0-lock-tabs-container').after('<div><p class="auth0-lock-alternative" style="padding:5px 0;"><a class="auth0-lock-alternative-link" href="http://<Sharepoint Site>/_windows/default.aspx?ReturnUrl=/_layouts/15/Authenticate.aspx">Login with Windows Authentication</a></p><p><span>or</span></p></div>');
+  $('.auth0-lock-tabs-container').
+      after('<div><p class="auth0-lock-alternative" style="padding:5px 0;"><a class="auth0-lock-alternative-link" href="http://<Sharepoint Site>/_windows/default.aspx?ReturnUrl=/_layouts/15/Authenticate.aspx">Login with Windows Authentication</a></p><p><span>or</span></p></div>');
 });
 ```
