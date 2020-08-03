@@ -1,3 +1,7 @@
+# This library is DEPRECATED
+
+The features required by this library are no longer provided by Auth0 for new tenants.
+
 # Auth0 Claims Provider for SharePoint 2010 / 2013
 
 ## Prerequisites
@@ -18,7 +22,7 @@ Enable-ClaimsProvider
   1. Open solution and enable "NuGet Package Restore"
   2. Compile solution
   3. Deploy from within Visual Studio
-  
+
 ## Releasing
 
 To create a new version build the WSP in Release mode on your machine and create a GitHub release: https://github.com/auth0/auth0-sharepoint/releases
@@ -32,7 +36,7 @@ After the release has been created the release will be available on the Auth0 CD
 
  - https://cdn.auth0.com/sharepoint/sp2013/Auth0.ClaimsProvider.wsp
  - https://cdn.auth0.com/sharepoint/sp2010/Auth0.ClaimsProvider.wsp
- 
+
 ## Documentation
 
 For more information about <a href="http://auth0.com" target="_blank">auth0</a> visit our <a href="http://docs.auth0.com/" target="_blank">documentation page</a>.
