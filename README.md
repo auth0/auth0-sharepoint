@@ -4,7 +4,7 @@ This repository shows different ways of interacting with a SharePoint environmen
 
 - [clientcontext-active-authentication](clientcontext-active-authentication): Active Authentication with Auth0 when talking to SharePoint using the ClientContext (API)
 - [auth0-authentication-provider](auth0-authentication-provider): SharePoint PowerShell Module to connect SharePoint Web Applications with Auth0
-- [auth0-claims-provider](auth0-claims-provider/src): Auth0 Claims Provider for SharePoint 2010 / 2013 
+- [auth0-claims-provider](auth0-claims-provider/src): [**DEPRECATED**] Auth0 Claims Provider for SharePoint 2010 / 2013. This package is no longer supported nor available for new tenants.
 
 ## Customizing the Login Page
 
@@ -24,14 +24,14 @@ You will need to replace the contents of that file with the content in the [logi
 ```
 
 If you need to provide a way for users to log-in directly to Sharepoint using Windows Authentication, you will need to customize the login page to include a link to the Sharepoint Login page, usually http://<Sharepoint Site>/_windows/default.aspx?ReturnUrl=/_layouts/15/Authenticate.aspx. You can do it with the following code:
- 
+
  ```js
 lock.on('signin ready', function() {
   $('.auth0-lock-tabs-container').
-      after('<div><p class="auth0-lock-alternative" style="padding:5px 0;">' + 
-            '<a class="auth0-lock-alternative-link" href="http://<Sharepoint Site>/_windows/default.aspx?ReturnUrl=/_layouts/15/Authenticate.aspx">' + 
+      after('<div><p class="auth0-lock-alternative" style="padding:5px 0;">' +
+            '<a class="auth0-lock-alternative-link" href="http://<Sharepoint Site>/_windows/default.aspx?ReturnUrl=/_layouts/15/Authenticate.aspx">' +
             'Login with Windows Authentication'+
-            '</a>'+ 
+            '</a>'+
             '</p><p><span>or</span></p></div>');
 });
 ```
