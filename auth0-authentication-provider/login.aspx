@@ -13,7 +13,9 @@ protected override void OnLoad(EventArgs e)
 {
     string domain = "YOUR_AUTH0_DOMAIN";
     string clientId = "YOUR_CLIENT_ID";
-    string redirectUri = HttpUtility.UrlEncode(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/_trust/");
+    string redirectUri = HttpUtility.UrlEncode(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/_trust/")
+        .Replace("http%3a%2f%2f", "https%3a%2f%2f", StringComparison.OrdinalIgnoreCase);
+    
     string state = GetParameterByName(HttpContext.Current.Request.Url.Query, "Source");
 
     Response.Redirect("https://" + domain + "/wsfed/" + clientId + "?wreply=" + redirectUri + "&wctx=" + state, true);
