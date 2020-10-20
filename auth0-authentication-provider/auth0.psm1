@@ -1,4 +1,4 @@
-﻿# Globals.
+# Globals.
 $modulesPath = ($env:PSModulePath -Split ";")[0]
 $modulePath = "$modulesPath\Auth0"
 $identityTokenIssuerName = "Auth0"
@@ -51,34 +51,28 @@ function LogSuccess([string]$msg)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Function: Get the SharePoint Version.
+# Please note that this function works for Sharepoint 2010-2016.
+# It must be updated to support Sharepoint 2019
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 function GetSharePointVersion()
 {
     $SPFarm = Get-SPFarm
     $number = $SPFarm.BuildVersion.Major
 
-    If ($number -eq 15) 
-    { 
-      Return 2013
-    } 
-    elseif ($number -eq 14) 
-    { 
-      Return 2010
-    } 
-    else 
-    { 
-      Return 0
-    } 
+ Switch ($number)
+    {
+        14 {$version ='2010';break}
+        15 {$version ='2013';break}
+        16 {$version ='2016';break} # might not distinguish between 2016 & 2019 because major build  
+                                    # version is the same. 
+        default {$version = '0'}
+    }
+
+    Return $version
+
 }
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# Function: SharePoint 2013.
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-function IsSharePoint2013 {
-    $SPFarm = Get-SPFarm
-    return $SPFarm.BuildVersion.Major -eq 15
-}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Function: Send Result.
@@ -271,8 +265,19 @@ function Enable-Auth0 {
 	
     # Login page.    
 	$redirectionUrl = "~/_login/$clientId.aspx"  
-	$version = &{if (IsSharePoint2013) {"15"} else {"14"} }
-	$loginPageFolder =  "$env:ProgramFiles\Common Files\Microsoft Shared\Web Server Extensions\$version\TEMPLATE\IDENTITYMODEL\LOGIN"
+    $version = GetSharepointVersion
+
+    Switch ($version)
+    {
+        "2010" {$webServerExtensionVersion ="14";break}
+        "2013" {$webServerExtensionVersion ="15";break}
+        "2016" {$webServerExtensionVersion ="16";break} # might not distinguish between 2016 & 2019 because major build  
+                                                        # version is the same. 
+        default {$webServerExtensionVersion = "0"}
+    }
+
+
+	$loginPageFolder =  "$env:ProgramFiles\Common Files\Microsoft Shared\Web Server Extensions\$webServerExtensionVersion\TEMPLATE\IDENTITYMODEL\LOGIN"
 	
     # WS-Federation.
 	$realm = "urn:$clientId"
@@ -893,13 +898,24 @@ function Update-ClaimsProvider {
       
     # Download claims provider.  
     $webclient = new-object net.webclient
-    $isSP2013 = IsSharePoint2013
-    If ($isSP2013) {
-        Log "Downloading Claims Provider solution for SP2013..."
-        $webclient.DownloadFile("https://cdn.auth0.com/sharepoint/sp2013/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
-    } Else {
-        Log "Downloading Claims Provider solution for SP2010..."
-        $webClient.DownloadFile("https://cdn.auth0.com/sharepoint/sp2010/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
+    $sharepointVersion = GetSharepointVersion
+
+    Switch ($sharepointVersion)
+    {
+        2010 {
+                Log "Downloading Claims Provider solution for SP2010...";
+                $webClient.DownloadFile("https://cdn.auth0.com/sharepoint/sp2010/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp");
+                break;}
+        2013 {
+                Log "Downloading Claims Provider solution for SP2013...";
+                $webclient.DownloadFile("https://cdn.auth0.com/sharepoint/sp2013/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp");
+                break;}
+        2016 {    
+                Log "Downloading Claims Provider solution for SP2016..."
+                $webclient.DownloadFile("https://cdn.auth0.com/sharepoint/sp2016/Auth0.ClaimsProvider.wsp", "$modulePath\Auth0.ClaimsProvider.wsp")
+                break} # might not distinguish between 2016 & 2019 because the major build version is the same.
+                                    
+        default {LogError "Sharepoint version " + $sharepointVersion + " is not supported by this function."}
     }
   
     # Done.
@@ -1018,3 +1034,4 @@ Export-ModuleMember Enable-ClaimsProvider
 Export-ModuleMember Disable-ClaimsProvider
 Export-ModuleMember Update-ClaimsProvider
 Export-ModuleMember Troubleshoot-Auth0
+
