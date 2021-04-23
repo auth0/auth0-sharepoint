@@ -13,8 +13,14 @@ protected override void OnLoad(EventArgs e)
 {
     string domain = "YOUR_AUTH0_DOMAIN";
     string clientId = "YOUR_CLIENT_ID";
-    string redirectUri = HttpUtility.UrlEncode(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/_trust/")
-        .Replace("http%3a%2f%2f", "https%3a%2f%2f");
+    
+    // If your SharePoint site is behind a load balancer or other setup such that
+    // the user sees a different URL, replace "externalUrl" with the address that users
+    // use in the browser. Don't use a slash at the end. E.g.
+    // string externalUrl = "https://mysharepointsite.com"
+    string externalUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+    
+    string redirectUri = HttpUtility.UrlEncode(externalUrl + "/_trust/");
     
     string state = GetParameterByName(HttpContext.Current.Request.Url.Query, "Source");
 
